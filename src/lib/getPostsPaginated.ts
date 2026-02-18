@@ -14,7 +14,7 @@ export async function getPostsPaginated(page: number, perPage = 4) {
 
   // Obtener todos los docs para calcular el cursor
   const allSnapshot = await getDocs(
-    query(collection(db, "posts"), orderBy("createdAt", "desc"))
+    query(collection(db, "posts"), orderBy("createdAt", "desc")),
   );
   const allDocs = allSnapshot.docs;
   const startDoc = allDocs[offset - 1];

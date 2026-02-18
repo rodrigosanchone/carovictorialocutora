@@ -3,38 +3,47 @@ import {
   collection,
   query,
   where,
-  orderBy,
-  limit,
   getDocs,
-  startAfter,
+  Timestamp,
 } from "firebase/firestore";
 
-const POSTS_PER_PAGE = 4;
-
-export async function getTagsPaginator(tag: string, page: number) {
-  const postsRef = collection(db, "posts");
-  const baseQuery = query(
-    postsRef,
-    where("tags", "array-contains", tag),
-    orderBy("createdAt", "desc"),
-    limit(POSTS_PER_PAGE * page)
-  );
-
-  const snapshot = await getDocs(baseQuery);
-  const allDocs = snapshot.docs;
-
-  const paginatedDocs = allDocs.slice(
-    POSTS_PER_PAGE * (page - 1),
-    POSTS_PER_PAGE * page
-  );
-
-  const posts = paginatedDocs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
+function serializeDoc(docSnap: any) {
+  const data = docSnap.data();
   return {
-    posts,
-    total: allDocs.length,
+    id: docSnap.id,
+    slug: data.slug ?? docSnap.id,
+    title: data.title,
+    description: data.description ?? "",
+    content: data.content ?? "",
+    image: data.image ?? "",
+    tags: data.tags ?? [],
+    author: data.author ?? { name: "", photo: "" },
+    createdAt:
+      data.createdAt instanceof Timestamp
+        ? data.createdAt.toDate().toISOString()
+        : (data.createdAt ?? null),
+    updatedAt:
+      data.updatedAt instanceof Timestamp
+        ? data.updatedAt.toDate().toISOString()
+        : (data.updatedAt ?? null),
   };
+}
+
+export async function getTagsPaginator(
+  tagName: string,
+  page: number,
+  perPage = 4,
+) {
+  const postsRef = collection(db, "posts");
+  const q = query(postsRef, where("tags", "array-contains", tagName));
+  const snapshot = await getDocs(q);
+
+  const allPosts = snapshot.docs.map(serializeDoc);
+  const total = allPosts.length;
+
+  const start = (page - 1) * perPage;
+  const end = start + perPage;
+  const posts = allPosts.slice(start, end);
+
+  return { posts, total };
 }
