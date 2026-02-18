@@ -5,8 +5,27 @@ import {
   orderBy,
   limit,
   startAfter,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "./firebase";
+
+function serializeDoc(docSnap: any) {
+  const data = docSnap.data();
+  return {
+    id: docSnap.id,
+    slug: data.slug ?? docSnap.id, // 👈 usa el campo slug si existe, si no el id
+    title: data.title,
+    content: data.content,
+    description: data.description ?? "",
+    image: data.image,
+    tags: data.tags ?? [],
+    author: data.author ?? { name: "", photo: "" },
+    createdAt:
+      data.createdAt instanceof Timestamp
+        ? data.createdAt.toDate().toISOString()
+        : (data.createdAt ?? null),
+  };
+}
 
 export async function getPosts(params?: {
   limitCount?: number;
@@ -22,17 +41,5 @@ export async function getPosts(params?: {
 
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      id: doc.id,
-      title: data.title,
-      content: data.content,
-      description: data.description ?? "",
-      image: data.image,
-      tags: data.tags ?? [],
-      author: data.author ?? { name: "", photo: "" },
-      createdAt: data.createdAt ?? null,
-    };
-  });
+  return snapshot.docs.map(serializeDoc);
 }
