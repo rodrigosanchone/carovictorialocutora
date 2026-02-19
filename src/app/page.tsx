@@ -10,7 +10,6 @@ interface PageProps {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  // 👇 desempaquetamos la Promise
   const params = await searchParams;
   const currentPage = Number(params.page) || 1;
   const perPage = 4;
@@ -21,7 +20,6 @@ export default async function Page({ searchParams }: PageProps) {
     <main className="max-w-6xl mx-auto py-10">
       {currentPage === 1 && <Soy />}
 
-      {/* Sección superior: tags y buscador */}
       <section className="flex items-center justify-between gap-4 py-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex flex-wrap gap-2">{/* Tags opcionales */}</div>
         <div className="w-full max-w-xs">{/* Buscador opcional */}</div>

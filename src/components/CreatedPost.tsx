@@ -17,7 +17,7 @@ export default function CreatedPost() {
   const [authorName, setAuthorName] = useState("Carolina");
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [authorImage, setAuthorImage] = useState<string>(
-    "https://firebasestorage.googleapis.com/v0/b/carovictorialocutora-ab405.firebasestorage.app/o/caro.jpg?alt=media&token=37b67aee-cb27-4b17-b486-b086262e67b2"
+    "https://firebasestorage.googleapis.com/v0/b/carovictorialocutora-ab405.firebasestorage.app/o/caro.jpg?alt=media&token=37b67aee-cb27-4b17-b486-b086262e67b2",
   );
 
   const today = new Date().toLocaleDateString("es-CR", {
@@ -65,7 +65,7 @@ export default function CreatedPost() {
     setSelectedTags((prev) =>
       prev.includes(tagId)
         ? prev.filter((id) => id !== tagId)
-        : [...prev, tagId]
+        : [...prev, tagId],
     );
   };
 
@@ -111,7 +111,6 @@ export default function CreatedPost() {
         Crear nuevo artículo
       </h1>
 
-      {/* Autor editable */}
       <div className="flex flex-col items-center justify-center gap-4 mb-10">
         <div className="relative w-24 h-24">
           <Image
@@ -242,12 +241,12 @@ export default function CreatedPost() {
         </button>
       </div>
       <div className="flex justify-center mt-4">
-        <button
-          onClick={() => router.push("/Dashboard")}
+        {/*   <button
+          onClick={() => router.push("/")}
           className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
         >
           Volver al Dashboard
-        </button>
+        </button> */}
       </div>
     </div>
   );

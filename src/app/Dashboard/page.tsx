@@ -34,12 +34,12 @@ export default function DashboardPage() {
   const total = posts.length;
   const paginatedPosts = posts.slice(
     (currentPage - 1) * perPage,
-    currentPage * perPage
+    currentPage * perPage,
   );
 
   const handleLogout = async () => {
     await logout();
-    router.push("/Login");
+    router.push("/");
   };
 
   return (
@@ -49,7 +49,6 @@ export default function DashboardPage() {
         Bienvenido, {user?.email ?? "Usuario"}
       </h2>
 
-      {/* Botones de navegación */}
       <div className="flex gap-4 mb-8">
         <button
           onClick={() => setActiveSection("crear")}
