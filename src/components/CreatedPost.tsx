@@ -5,7 +5,7 @@ import { createPost } from "@/lib/post";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function CreatedPost() {
+export default function CreatedPost({ onBack }: { onBack: () => void }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -95,8 +95,8 @@ export default function CreatedPost() {
       setImageFile(null);
       setSelectedTags([]);
       setYoutubeUrl("");
+      if (onBack) onBack();
     } catch (error) {
-      console.error("Error al publicar:", error);
       alert("Hubo un error al guardar el artículo");
     }
   };
@@ -241,12 +241,12 @@ export default function CreatedPost() {
         </button>
       </div>
       <div className="flex justify-center mt-4">
-        {/*   <button
-          onClick={() => router.push("/")}
+        <button
+          onClick={onBack}
           className="px-6 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
         >
           Volver al Dashboard
-        </button> */}
+        </button>
       </div>
     </div>
   );

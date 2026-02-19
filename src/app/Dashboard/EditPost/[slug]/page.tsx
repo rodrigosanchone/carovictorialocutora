@@ -22,7 +22,7 @@ export default function EditPostPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [authorName, setAuthorName] = useState("Carolina");
   const [authorImage, setAuthorImage] = useState<string>(
-    "https://firebasestorage.googleapis.com/v0/b/carovictorialocutora-ab405.firebasestorage.app/o/caro.jpg?alt=media&token=37b67aee-cb27-4b17-b486-b086262e67b2"
+    "https://firebasestorage.googleapis.com/v0/b/carovictorialocutora-ab405.firebasestorage.app/o/caro.jpg?alt=media&token=37b67aee-cb27-4b17-b486-b086262e67b2",
   );
 
   const today = new Date().toLocaleDateString("es-CR", {
@@ -88,7 +88,7 @@ export default function EditPostPage() {
     setSelectedTags((prev) =>
       prev.includes(tagId)
         ? prev.filter((id) => id !== tagId)
-        : [...prev, tagId]
+        : [...prev, tagId],
     );
   };
 
@@ -112,7 +112,6 @@ export default function EditPostPage() {
 
       alert("Cambios guardados con éxito");
     } catch (error) {
-      console.error("Error al actualizar:", error);
       alert("Hubo un error al guardar los cambios");
     }
   };

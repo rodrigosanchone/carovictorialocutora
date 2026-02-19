@@ -18,5 +18,4 @@ export async function seedPost() {
   };
 
   await setDoc(ref, postData);
-  console.log("Post creado con ID:", ref.id);
 }

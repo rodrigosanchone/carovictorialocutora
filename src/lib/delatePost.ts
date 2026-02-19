@@ -23,7 +23,6 @@ export async function deletePost(postId: string) {
       );
       const imageRef = ref(storage, imagePath);
       await deleteObject(imageRef);
-      console.log("Imagen eliminada correctamente");
     } catch (error: any) {
       if (error.code === "storage/object-not-found") {
         console.warn("La imagen no existe en Storage, no se pudo eliminar.");
@@ -35,5 +34,4 @@ export async function deletePost(postId: string) {
 
   // Eliminar el documento en Firestore
   await deleteDoc(postRef);
-  console.log(`Post con ID ${postId} eliminado correctamente`);
 }

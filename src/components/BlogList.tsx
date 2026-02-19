@@ -25,7 +25,6 @@ export default function BlogList({
 
         window.location.reload();
       } catch (error) {
-        console.error("Error al eliminar el post:", error);
         alert("No se pudo eliminar el artículo");
       }
     }

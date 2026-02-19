@@ -55,7 +55,7 @@ export async function updatePost({
   if (imageFile) {
     try {
       const previousImagePath = decodeURIComponent(
-        imageUrl.split("/o/")[1].split("?")[0]
+        imageUrl.split("/o/")[1].split("?")[0],
       );
       const previousRef = ref(storage, previousImagePath);
       await deleteObject(previousRef);

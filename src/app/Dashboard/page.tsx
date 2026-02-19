@@ -91,10 +91,7 @@ export default function DashboardPage() {
 
       {/* Secciones */}
       {activeSection === "crear" && (
-        <div>
-          {" "}
-          <CreatedPost></CreatedPost>
-        </div>
+        <CreatedPost onBack={() => setActiveSection("editar")} />
       )}
 
       {activeSection === "editar" &&
